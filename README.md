@@ -1,7 +1,6 @@
 **beep**
 
-This is a small POC, that one can use the beeper/PC speaker which is present in [Xqemu](https://github.com/xqemu/xqemu)
-. (and possibly could be easily added to a real xbox, too)
+This is a small POC, that one can use the beeper/PC speaker which is present in [Xqemu](https://github.com/xqemu/xqemu). (and possibly could be easily added to a real xbox, too)
 
 Note:
 you need to run xQemu (untested with Xqemu2) with the following extra arg:
