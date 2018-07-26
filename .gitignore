@@ -1,0 +1,11 @@
+
+*.exe
+*.exe.manifest
+*.c.d
+*.obj
+*.o
+*.inl
+*.d
+_*.cpp
+_*.h
+
