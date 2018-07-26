@@ -10,8 +10,8 @@ or    `./qemu-system-i386 -soundhw pcspk -cpu pentium3  [...]`   (Xqemu2)
 
 the beeping code has been stole from "Matrix" (https://board.flatassembler.net/topic.php?t=1813) (15 Sep 2004, 20:17)
 
-<a href="bin/default.xbe" download>-> default.xbe</a> </br>
-<a href="beep.iso" download>-> beep.iso (xiso)</a> </br>
+<a href="https://github.com/0DaveX/beep/blob/master/bin/default.xbe?raw=true" download>-> default.xbe</a> </br>
+<a href="https://github.com/0DaveX/beep/blob/master/beep.iso?raw=true" download>-> beep.iso (xiso)</a> </br>
 
 Have fun :D
 
