@@ -3,9 +3,38 @@
 #include <hal/xbox.h>
 #include "stdio.h"
 
+
+void beep(int freq, int duration) // freq in [hz], duration in [ms]
+{
+   register int reg_ax asm ("ax");
+   reg_ax = freq;  
+
+   asm("mov %ax,%bx");
+   asm("mov $0x12,%dx");
+   asm("mov $0x34dc,%ax");
+   asm("div %bx");
+   asm("mov %al,%bl");
+   asm("mov $0xb6,%al");
+   asm("out %al,$0x43");
+   asm("mov %bl,%al");
+   asm("out %al,$0x42");
+   asm("mov %ah,%al");
+ 
+   asm("out %al,$0x42");
+   asm("in $0x62,%al");
+   asm("or $0x3,%al");
+   asm("out %al,$0x61");
+   asm("xor %ax,%ax");
+
+   XSleep(duration);
+   asm("in $0x61,%al");
+   asm("and $0xfc,%al");
+   asm("out %al,$0x61");
+}
+
+
 void main(void)
 {
-    int i;
 
     switch(pb_init())
     {
@@ -21,18 +50,91 @@ void main(void)
     while(1) {
         XSleep(500);
         debugPrint("thx JayFoxRox!\n\n");
-        XSleep(1500);
+        XSleep(1100);
         debugPrint("proudly presented by DaveX ;)\n\n");
-        XSleep(1500);
-        debugPrint("make sure to run Xqemu with: -soundhw pcspk\n");
+        XSleep(1100);
+        debugPrint("if run in Xqemu make sure to use: -soundhw pcspk\n");
         debugPrint("e.g. ./qemu-system-xbox -soundhw pcspk -machine xbox, [...]\nor\n");
         debugPrint("./qemu-system-i386 -soundhw pcspk -cpu pentium3  [...]\n\n");
-        XSleep(1700);
+        XSleep(1100);
         debugPrint("get ready!\n");
-        XSleep(2002);
+        XSleep(1002);
 
-      /*
-        assembled with:  https://defuse.ca/online-x86-assembler.htm#disassembly
+
+	beep(440,100);
+	XSleep(700);
+
+	beep(222,600);
+	XSleep(300);
+
+	beep(111,2200);
+	XSleep(700);
+
+	beep(440,200);
+	XSleep(700);
+
+	debugPrint("now => \n");
+	XSleep(700);
+
+
+	beep(659,406);
+	beep(494,203);
+	beep(523,203);
+	beep(587,406);
+	beep(523,203);
+	beep(494,203);
+	beep(440,406);
+	beep(440,203);
+	beep(523,203);
+	beep(659,406);
+	beep(587,203);
+	beep(523,203);
+	beep(494,609);
+	beep(523,203);
+	beep(587,406);
+	beep(659,406);
+	beep(523,406);
+	beep(440,406);
+	beep(440,203);
+	beep(440,203);
+	beep(494,203);
+	beep(523,203);
+	beep(587,609);
+	beep(698,203);
+	beep(880,406);
+	beep(784,203);
+	beep(698,203);
+	beep(659,609);
+	beep(523,203);
+	beep(659,406);
+	beep(587,203);
+	beep(523,203);
+	beep(494,406);
+	beep(494,203);
+	beep(523,203);
+	beep(587,406);
+	beep(659,406);
+	beep(523,406);
+	beep(440,406);
+	beep(440,406);
+
+
+	XSleep(1776);
+        debugPrint("thx bb :)\n");
+
+
+      XSleep(7887);
+
+    }
+
+    pb_kill();
+    XReboot();
+}
+
+
+
+ /*  CREDIZ
+        from user "Matrix" https://board.flatassembler.net/topic.php?t=1813
 
         // <asm code>
 	mov ax,440
@@ -65,24 +167,4 @@ void main(void)
 	or al,3
 	out 0x61,al
 	ret
-
-        // </asm code>
-
-*/
-             
-
-         char Beep[] = "\x66\xB8\xB8\x01\xE8\x13\x00\x00\x00\x66\x31\xC0\xCD\x16\xE8\x02\x00\x00\x00\xCD\x20\xE4\x61\x24\xFC\xE6\x61\xC3\x66\x89\xC3\x66\xBA\x12\x00\x66\xB8\xDC\x34\x66\xF7\xF3\x88\xC3\xB0\xB6\xE6\x43\x88\xD8\xE6\x42\x88\xE0\xE6\x42\xE4\x61\x0C\x03\xE6\x61\xC3";
-                     
-      void(*beep)();
-      beep = (void(*)()) Beep;
-      // (void)(*beep)();
-      beep();       
-      //dead code now below!
-
-      XSleep(2000);
-
-    }
-
-    pb_kill();
-    XReboot();
-}
+      */
