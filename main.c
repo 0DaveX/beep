@@ -3,6 +3,7 @@
 #include <hal/xbox.h>
 #include "stdio.h"
 
+#define delayAfterBeep 100
 
 void beep(int freq, int duration) // freq in [hz], duration in [ms]
 {
@@ -30,6 +31,8 @@ void beep(int freq, int duration) // freq in [hz], duration in [ms]
    asm("in $0x61,%al");
    asm("and $0xfc,%al");
    asm("out %al,$0x61");
+
+   XSleep(delayAfterBeep);
 }
 
 
@@ -117,6 +120,102 @@ void main(void)
 	beep(523,406);
 	beep(440,406);
 	beep(440,406);
+
+        XSleep(1953);
+
+	/* Imp March
+	   stolen from (/thx at) https://gist.github.com/tagliati/1804108
+	*/
+    
+	beep(440, 500); 
+	beep(440, 500);     
+	beep(440, 500); 
+	beep(349, 350); 
+	beep(523, 150);
+
+	beep(440, 500);
+	beep(349, 350);
+	beep(523, 150);
+	beep(440, 1000);
+	//first bit
+
+	beep(659, 500);
+	beep(659, 500);
+	beep(659, 500);    
+	beep(698, 350); 
+	beep(523, 150);
+
+	beep(415, 500);
+	beep(349, 350);
+	beep(523, 150);
+	beep(440, 1000);
+	//second bit...
+
+	beep(880, 500);
+	beep(440, 350); 
+	beep(440, 150);
+	beep(880, 500);
+	beep(830, 250); 
+	beep(784, 250);
+
+	beep(740, 125);
+	beep(698, 125);    
+	beep(740, 250);
+	XSleep(250);
+	beep(455, 250);    
+	beep(622, 500);  
+	beep(587, 250);  
+	beep(466, 250);  
+	//start of the interesting bit
+
+	beep(523, 125);  
+	beep(466, 125);  
+	beep(523, 250);      
+	XSleep(250);
+	beep(349, 125);  
+	beep(415, 500);  
+	beep(349, 375);  
+	beep(440, 125); 
+
+	beep(523, 500); 
+	beep(440, 375);  
+	beep(523, 125); 
+	beep(659, 1000); 
+	//more interesting stuff (this doesn't quite get it right somehow)
+
+	beep(880, 500);
+	beep(440, 350); 
+	beep(440, 150);
+	beep(880, 500);
+	beep(830, 250); 
+	beep(784, 250);
+
+	beep(740, 125);
+	beep(698, 125);    
+	beep(740, 250);
+	XSleep(250);
+	beep(455, 250);    
+	beep(622, 500);  
+	beep(587, 250);  
+	beep(466, 250);  
+	//repeat... repeat
+
+	beep(523, 125);  
+	beep(466, 125);  
+	beep(523, 250);      
+	XSleep(250);
+	beep(349, 250);  
+	beep(415, 500);  
+	beep(349, 375);  
+	beep(523, 125); 
+	   
+	beep(440, 500);            
+	beep(349, 375);            
+	beep(261, 125);            
+	beep(440, 1000);       
+	//and we're done \ó/ 
+        // end March
+
 
 
 	XSleep(1776);
