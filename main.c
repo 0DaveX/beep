@@ -3,34 +3,35 @@
 #include <hal/xbox.h>
 #include "stdio.h"
 
-#define delayAfterBeep 100
+#define delayAfterBeep 47
 
 void beep(int freq, int duration) // freq in [hz], duration in [ms]
 {
    register int reg_ax asm ("ax");
    reg_ax = freq;  
 
-   asm("mov %ax,%bx");
-   asm("mov $0x12,%dx");
-   asm("mov $0x34dc,%ax");
-   asm("div %bx");
-   asm("mov %al,%bl");
-   asm("mov $0xb6,%al");
-   asm("out %al,$0x43");
-   asm("mov %bl,%al");
-   asm("out %al,$0x42");
-   asm("mov %ah,%al");
+   asm("mov %ax,%bx \n"
+       "mov $0x12,%dx \n"
+       "mov $0x34dc,%ax \n"
+       "div %bx \n"
+       "mov %al,%bl \n"
+       "mov $0xb6,%al \n"
+       "out %al,$0x43 \n"
+       "mov %bl,%al \n"
+       "out %al,$0x42 \n"
+       "mov %ah,%al \n"
  
-   asm("out %al,$0x42");
-   asm("in $0x62,%al");
-   asm("or $0x3,%al");
-   asm("out %al,$0x61");
-   asm("xor %ax,%ax");
+       "out %al,$0x42 \n"
+       "in $0x61,%al \n"
+       "or $0x3,%al \n"
+       "out %al,$0x61 \n"
+       "xor %ax,%ax \n");
 
    XSleep(duration);
-   asm("in $0x61,%al");
-   asm("and $0xfc,%al");
-   asm("out %al,$0x61");
+
+   asm("in $0x61,%al \n"
+       "and $0xfc,%al \n"
+       "out %al,$0x61 \n");
 
    XSleep(delayAfterBeep);
 }
